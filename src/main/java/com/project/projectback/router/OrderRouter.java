@@ -16,6 +16,20 @@ public class OrderRouter {
     public RouterFunction<ServerResponse> orderRoute(OrderHandler orderHandler) {
         return RouterFunctions
                 .route(RequestPredicates.GET("/order/orderDtlList/{odNo}/{clmNo}")
-                        .and(RequestPredicates.accept(MediaType.APPLICATION_JSON)), orderHandler::findOmOdDtlList);
+                .and(
+                        RequestPredicates.accept(MediaType.APPLICATION_JSON))
+                        , orderHandler::findOmOdDtlList)
+                .andRoute(
+                        RequestPredicates.GET("/order/orderDtlList2/{odNo}").and(RequestPredicates.accept(MediaType.APPLICATION_JSON))
+                        , orderHandler::findOmOdDtlList2
+                )
+                .andRoute(
+                        RequestPredicates.GET("/order/omOdList").and(RequestPredicates.accept(MediaType.APPLICATION_JSON))
+                        , orderHandler::findOmOdList
+                )
+                .andRoute(
+                        RequestPredicates.GET("/order/saveOmOdDtl/{odNo}").and(RequestPredicates.accept(MediaType.APPLICATION_JSON))
+                        , orderHandler::saveOmOdDtl
+                );
     }
 }
